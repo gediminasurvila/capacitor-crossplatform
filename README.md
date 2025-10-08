@@ -148,16 +148,34 @@ For more info, see the [Apple documentation](https://developer.apple.com/documen
 
 ## Notes on Android packaging (Capacitor)
 
-These notes assume you're packaging the app using Capacitor (native Android shell).
+- Build web assets: run `npm run build` before `npx cap copy android` so the native app uses the latest `dist/` files.
+- Remove `server.url` in `capacitor.config.ts` for release builds to ensure the app loads local files.
+- Add and sync platform: `npx cap add android` (once), then `npx cap copy android` and `npx cap sync android` after web builds.
+- Open in Android Studio: `npx cap open android` to run, debug, and create signed APK/AAB artifacts.
+- Generate release AAB/APK: build in Android Studio or run `./gradlew bundleRelease` / `./gradlew assembleRelease` inside the `android/` folder.
+- Sign releases: create a keystore and sign builds in Android Studio or via Gradle signing configs; never commit keystore passwords to source control.
+- Permissions: add `<uses-permission>` entries in `android/app/src/main/AndroidManifest.xml` and request dangerous permissions (camera, location, storage) at runtime using Capacitor plugin APIs.
+- Service worker: not required for native Capacitor apps; keep it only if you also serve the project as a web PWA.
+  \
+  Quick commands
 
-- webDir: `capacitor.config.ts` points `webDir` to `dist`. Always run `npm run build` before `npx cap copy android` so the native project receives the latest production files.
-- server.url: If `capacitor.config.ts` contains a `server.url` value (used for live-reload or testing), remove or comment it out before creating release builds. When present the native app will load that remote URL instead of local `dist/` files.
-- Add & sync platform: use `npx cap add android` once, then after web builds run `npx cap copy android` and `npx cap sync android` to update native assets and plugins.
-- Open & run: use `npx cap open android` to open the Android Studio project. Use Android Studio to run on emulators/devices, configure signing, and produce release APK/AABs for the Play Store.
-- Signing: configure a signing key (keystore) in Android Studio (or Gradle) and build a signed AAB for publishing. Keep signing keys secure and out of source control.
-- Debugging: use Android Studio logcat and the Android emulator; `./gradlew assembleDebug` or `./gradlew installDebug` are available from the `android/` folder.
-- Service worker: Capacitor native apps do not require a service worker. If you also deploy the app as a PWA (served in browsers), keep the worker in `public/service-worker.js` and register it from the web app.
-- Troubleshooting: open the project in Android Studio to let the IDE install missing SDK components or update Gradle. If the app keeps loading a remote URL, check and remove `server.url` and then run `npx cap copy android` again.
+```bash
+# build web assets and sync with Android
+npm run build
+npx cap copy android
+npx cap sync android
+npx cap open android
+```
+
+Example Android manifest permissions
+
+Add the following inside `android/app/src/main/AndroidManifest.xml` as needed:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+```
 
 Further reading: https://capacitorjs.com/docs/android
 
