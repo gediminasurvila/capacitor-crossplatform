@@ -146,9 +146,20 @@ Add the following keys for common permissions:
 
 For more info, see the [Apple documentation](https://developer.apple.com/documentation/bundleresources/information_property_list) and [Capacitor iOS guide](https://capacitorjs.com/docs/v5/ios).
 
-## Notes on Android packaging
+## Notes on Android packaging (Capacitor)
 
-If you need to publish this PWA as an Android app in the future, you will need to follow Android's Trusted Web Activity (TWA) requirements (Digital Asset Links) or use Capacitor to create a native Android shell. See Android and Capacitor docs for details.
+These notes assume you're packaging the app using Capacitor (native Android shell).
+
+- webDir: `capacitor.config.ts` points `webDir` to `dist`. Always run `npm run build` before `npx cap copy android` so the native project receives the latest production files.
+- server.url: If `capacitor.config.ts` contains a `server.url` value (used for live-reload or testing), remove or comment it out before creating release builds. When present the native app will load that remote URL instead of local `dist/` files.
+- Add & sync platform: use `npx cap add android` once, then after web builds run `npx cap copy android` and `npx cap sync android` to update native assets and plugins.
+- Open & run: use `npx cap open android` to open the Android Studio project. Use Android Studio to run on emulators/devices, configure signing, and produce release APK/AABs for the Play Store.
+- Signing: configure a signing key (keystore) in Android Studio (or Gradle) and build a signed AAB for publishing. Keep signing keys secure and out of source control.
+- Debugging: use Android Studio logcat and the Android emulator; `./gradlew assembleDebug` or `./gradlew installDebug` are available from the `android/` folder.
+- Service worker: Capacitor native apps do not require a service worker. If you also deploy the app as a PWA (served in browsers), keep the worker in `public/service-worker.js` and register it from the web app.
+- Troubleshooting: open the project in Android Studio to let the IDE install missing SDK components or update Gradle. If the app keeps loading a remote URL, check and remove `server.url` and then run `npx cap copy android` again.
+
+Further reading: https://capacitorjs.com/docs/android
 
 ## License
 
