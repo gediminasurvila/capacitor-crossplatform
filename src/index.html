@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Capacitor PWA Test</title>
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#317EFB" />
+
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      button {
+        margin: 10px 0;
+        padding: 10px 15px;
+        font-size: 16px;
+      }
+      pre {
+        background: #eee;
+        padding: 10px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Capacitor PWA Test</h1>
+    <p>Testing Capacitor plugins in PWA mode (browser fallbacks).</p>
+
+    <button id="btn-device">Get Device Info</button>
+    <button id="btn-geo">Get Geolocation</button>
+    <button id="btn-camera">Take Photo</button>
+    <button id="btn-clipboard">Copy to Clipboard</button>
+    <button id="btn-notify">Send Local Notification</button>
+
+    <pre id="output"></pre>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

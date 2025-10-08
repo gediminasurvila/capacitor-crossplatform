@@ -1,0 +1,47 @@
+# Node
+node_modules/
+dist/
+.env
+
+# Vite
+.vite/
+
+# macOS
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Capacitor
+android/
+ios/
+
+# Android build artifacts (Bubblewrap/Android Studio)
+*.apk
+*.aab
+*.keystore
+gradle/
+.gradle/
+
+# Environment files
+.env.local
+.env.*.local
+
+# IDE / editors
+.vscode/
+.idea/
+*.iml
+
+# Logs and caches
+*.log
+.cache/
+.parcel-cache/
+node_modules/.cache/
+
+# Test coverage
+coverage/
+
+# Misc
+*.swp
