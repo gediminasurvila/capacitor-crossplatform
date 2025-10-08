@@ -175,6 +175,13 @@ Add the following inside `android/app/src/main/AndroidManifest.xml` as needed:
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+<!-- For precise location (GPS, Wi-Fi, and cellular) -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+<!-- For approximate location (Wi-Fi and cellular only) -->
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 ```
 
 Further reading: https://capacitorjs.com/docs/android
